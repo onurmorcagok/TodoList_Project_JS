@@ -1,4 +1,5 @@
-// Tüm elementleri seçme işlemi 
+// All elements selection
+
 const form = document.querySelector("#todo-form");
 const todoInput = document.querySelector("#todo");
 const todoList = document.querySelector(".list-group");
@@ -12,23 +13,86 @@ eventListeners();
 function eventListeners() { // All eventListeners
 
     form.addEventListener("submit", addTodo);
+    document.addEventListener("DOMContentLoaded", loadAllTodosToUI);
+
+}
+
+function loadAllTodosToUI() {
+
+    let todos = getTodosFromStorage();
+
+    todos.forEach(function (todo) {
+
+        addTodoToUI(todo);
+    })
 
 }
 
 function addTodo(e) {
 
-    const newTodo = todoInput.value.trim(); //todoInput degerini alır ve bosluklari temizler.
+    const newTodo = todoInput.value.trim(); // Gets the todoInput value and clears the spaces.
 
-    addTodoToUI(newTodo);
+    if (newTodo === "") {
 
+        showAlert("danger", "Lütfen bir todo giriniz.");
+
+    } else {
+
+        addTodoToUI(newTodo);
+        addTodoToStorage(newTodo);
+        showAlert("success", "Todo başarıyla eklendi.")
+
+    }
 
     e.preventDefault();
+}
+
+function getTodosFromStorage() { // Storage all todos
+
+    let todos;
+
+    if (localStorage.getItem("todos") === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+
+    return todos;
+}
+
+function addTodoToStorage(newTodo) {
+
+    let todos = getTodosFromStorage();
+
+    todos.push(newTodo);
+
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+function showAlert(type, message) {
+
+    const alert = document.createElement("div");
+
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+
+    firstCardBody.appendChild(alert);
+
+    // setTimeout Method - A second later, the alert is removed
+
+    setTimeout(function () {
+
+        alert.remove();
+
+    }, 1000);
+
 }
 
 function addTodoToUI(newTodo) { // String degerini listItem olarak UI'ya ekler.
 
     //List Item Olusturma
     const listItem = document.createElement("li");
+
     // Link Olusturma
     const link = document.createElement("a");
     link.href = "#";
