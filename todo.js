@@ -13,7 +13,6 @@ function eventListeners() { // All eventListeners
 
     form.addEventListener("submit", addTodo);
 
-
 }
 
 function addTodo(e) {
@@ -21,7 +20,6 @@ function addTodo(e) {
     const newTodo = todoInput.value.trim(); //todoInput degerini alır ve bosluklari temizler.
 
     addTodoToUI(newTodo);
-
 
 
     e.preventDefault();
