@@ -14,7 +14,30 @@ function eventListeners() { // All eventListeners
 
     form.addEventListener("submit", addTodo);
     document.addEventListener("DOMContentLoaded", loadAllTodosToUI);
+    secondCardBody.addEventListener("click", deleteTodo);
+}
 
+function deleteTodo(e) {
+
+    if (e.target.className === "fa fa-remove") {
+        e.target.parentElement.parentElement.remove();
+        deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
+        showAlert("success", "Todo başarıyla silindi.")
+    }
+}
+
+
+function deleteTodoFromStorage(deletetodo) {
+
+    let todos = getTodosFromStorage();
+
+    todos.forEach(function (todo,index) {
+        if (todo === deletetodo) {
+            todos.splice(index, 1); //  Arrayden degeri siler.
+        }
+    });
+
+    localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function loadAllTodosToUI() {
