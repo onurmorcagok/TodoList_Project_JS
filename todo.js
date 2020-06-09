@@ -33,9 +33,6 @@ function clearAllTodos(e) {
 
         localStorage.removeItem("todos");
     }
-
-
-
 }
 
 function filterTodos(e) {
