@@ -8,7 +8,7 @@ const secondCardBody = document.querySelectorAll(".card-body")[1];
 const filter = document.querySelector("#filter");
 const clearButton = document.querySelector("#clear-todos");
 
-eventListeners();
+eventListeners(); // All functions call
 
 function eventListeners() { // All eventListeners
 
@@ -100,7 +100,9 @@ function addTodo(e) {
     } else {
 
         addTodoToUI(newTodo);
+
         addTodoToStorage(newTodo);
+
         showAlert("success", "Todo başarıyla eklendi.")
 
     }
@@ -149,12 +151,12 @@ function showAlert(type, message) {
 
 }
 
-function addTodoToUI(newTodo) { // String degerini listItem olarak UI'ya ekler.
+function addTodoToUI(newTodo) { // String value listItem with UI added.
 
-    //List Item Olusturma
+    //List Item Create
     const listItem = document.createElement("li");
 
-    // Link Olusturma
+    // Link Create
     const link = document.createElement("a");
     link.href = "#";
     link.className = "delete-item";
