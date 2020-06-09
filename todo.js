@@ -15,6 +15,47 @@ function eventListeners() { // All eventListeners
     form.addEventListener("submit", addTodo);
     document.addEventListener("DOMContentLoaded", loadAllTodosToUI);
     secondCardBody.addEventListener("click", deleteTodo);
+    filter.addEventListener("keyup", filterTodos);
+    clearButton.addEventListener("click", clearAllTodos);
+}
+
+function clearAllTodos(e) {
+
+    if (confirm("Tüm todoları temizlemek istediğinize emin misiniz ?")) {
+
+        // UI üzerinden Todoları kaldırcaz
+
+        // todoList.innerHTML = "";
+
+        while (todoList.firstElementChild != null) {
+            todoList.removeChild(todoList.firstElementChild);
+        }
+
+        localStorage.removeItem("todos");
+    }
+
+
+
+}
+
+function filterTodos(e) {
+
+    const filterValue = e.target.value.toLowerCase();
+    const listItems = document.querySelectorAll(".list-group-item");
+
+    listItems.forEach(function (listItem) {
+
+        const text = listItem.textContent.toLowerCase();
+
+        if (text.indexOf(filterValue) === -1) {
+
+            listItem.setAttribute("style", "display : none !important");
+
+        } else {
+
+            listItem.setAttribute("style", "display : block");
+        }
+    });
 }
 
 function deleteTodo(e) {
@@ -31,7 +72,7 @@ function deleteTodoFromStorage(deletetodo) {
 
     let todos = getTodosFromStorage();
 
-    todos.forEach(function (todo,index) {
+    todos.forEach(function (todo, index) {
         if (todo === deletetodo) {
             todos.splice(index, 1); //  Arrayden degeri siler.
         }
